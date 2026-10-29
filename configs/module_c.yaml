@@ -1,0 +1,96 @@
+# ---------------------------------------------------------------------------
+# Module C configuration: Dynaphos + project-specific sections.
+# Sections run / display / sampling / cortex_model / temporal_dynamics / size /
+# brightness_saturation / thresholding / default_stim / gabor are read by
+# Dynaphos itself. Values are the Dynaphos defaults (config/params.yaml in
+# github.com/neuralcodinglab/dynaphos) unless marked  # CHANGED.
+# Extra sections (layout / render / constraints / atlas) are read by module_c.
+# UNITS: Dynaphos takes stimulation amplitudes in AMPERES (23.9e-6 = 23.9 uA).
+# ---------------------------------------------------------------------------
+run:
+  resolution: [512, 512]    # Dynaphos default. At 16 deg FOV this is 16 px/deg; phosphene sigma at 100 uA is
+                            # ~0.03-0.1 deg (0.5-1.7 px). At 128 px most phosphenes are sub-pixel and alias away.
+                            # Memory ~ batch * n_electrodes * H * W floats (4 * 500 * 256^2 * 4 B = 0.5 GB per tensor).
+  view_angle: 16            # degrees, horizontal. Objects span ~10 deg (Scialom et al.).
+  origin: [0, 0]
+  min_angle: 0.001
+  fps: 35
+  gpu: 0                    # falls back to CPU automatically if CUDA is unavailable
+  print_stats: false
+  seed: 42
+  dtype: float32
+  use_gaussian_lut: false
+  batch_size: 1            # CHANGED (default 0). Must be >= 1 for module_c (fixed internal batch).
+
+display:
+  screen_resolution: [1920, 1080]
+  screen_diagonal: 13.3
+  dist_to_screen: 600
+
+sampling:
+  sampling_method: receptive_fields
+  RF_size: 0.5
+  stimulus_scale: 1.e-4     # amperes; Dynaphos' default "full intensity" amplitude (100 uA)
+
+cortex_model:
+  model: dipole
+  k: 17.3
+  a: 0.75
+  b: 120
+  alpha: 0.95
+  dropout_rate: 0.2         # only used by layout.mode = cortical_grid
+  noise_scale: 0.4          # only used by layout.mode = cortical_grid
+
+temporal_dynamics:
+  trace_increase_rate: 13.95528162
+  activation_decay_per_second: 0.00012340980408667956
+  trace_decay_per_second: 0.99949191
+
+size:
+  size_equation: sqrt
+  MD: 0.7
+  I_half: 40
+  slope_size: 0.08
+  current_spread: 675.e-6
+  radius_to_sigma: 0.5
+
+brightness_saturation:
+  cps_half: 1.057631326853325e-07
+  slope_brightness: 19152642.500946816
+
+thresholding:
+  use_threshold: true
+  rheobase: 23.9e-6
+  activation_threshold: 9.141886000943878e-08
+  activation_threshold_sd: 6.715877869833961e-08
+
+default_stim:
+  relative_stim_duration: 1
+  pw_default: 170.e-6       # seconds
+  freq_default: 300         # Hz
+
+gabor:
+  gabor_filtering: false
+  gamma: 1.5
+
+# ------------------------- module_c-specific sections ----------------------
+layout:
+  mode: probabilistic       # probabilistic | cortical_grid | array
+  n_electrodes: 250         # probabilistic: exact count inside the field of view
+                            # cortical_grid: upper bound (random subset if more are available)
+  seed: 0                   # layout seed (separate from run.seed)
+  # array mode: pass x_deg / y_deg arrays (visual-field degrees) to build_layout(..., x_deg=, y_deg=)
+
+render:
+  n_frames: 12              # static stimulus is shown for this many frames; last frame is returned
+  deterministic: false      # Dynaphos forces torch deterministic mode; we relax it (grid_sample backward etc.)
+
+constraints:
+  i_max: 100.e-6            # amperes. DEFAULT = Dynaphos stimulus_scale. Replace with the value you justify
+                            # from the Dynaphos docs / safety literature and record the source here.
+  levels: null              # null = continuous; else number of discrete current levels (e.g. 16, 128)
+
+atlas:
+  search_iters: 8           # (batch_size+1)-ary search rounds for per-electrode current thresholds
+  amp_search_max: 1.e-3     # amperes; upper bracket for the threshold search
+  ref_current: null         # null = constraints.i_max; used for phosphene size / brightness columns

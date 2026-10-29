@@ -1,0 +1,22 @@
+[
+  {
+    "arm": "B1_heuristic",
+    "K@50%": null,
+    "K@90%": null
+  },
+  {
+    "arm": "B2b_amortised",
+    "K@50%": null,
+    "K@90%": null
+  },
+  {
+    "arm": "R0_scoreboard",
+    "K@50%": 9.000000000000002,
+    "K@90%": null
+  },
+  {
+    "arm": "R1_random",
+    "K@50%": null,
+    "K@90%": null
+  }
+]

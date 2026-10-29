@@ -1,0 +1,13 @@
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+
+# Test and training artifacts
+.pytest_cache/
+ds project/quickdraw100.npz

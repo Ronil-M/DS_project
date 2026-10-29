@@ -1,0 +1,28 @@
+{
+  "n_electrodes_in_view": 500,
+  "n_usable_at_i_max": 500,
+  "frac_usable": 1.0,
+  "n_in_central_5deg_radius": 407,
+  "n_usable_in_central_5deg_radius": 407,
+  "thr_amp_uA_median": 43.67104156699497,
+  "thr_amp_uA_p10_p90": [
+    25.455106151639487,
+    61.12103583291174
+  ],
+  "frac_sigma_below_0.5px": 0.48,
+  "max_achievable_K": 500,
+  "n_frames": 12,
+  "i_max": 0.0001,
+  "ref_current": 0.0001,
+  "levels": null,
+  "image_shape": [
+    256,
+    256
+  ],
+  "deg2pix": 16.0,
+  "view_angle": 16,
+  "layout_mode": "probabilistic",
+  "layout_seed": 0,
+  "run_seed": 42,
+  "dynaphos_version": "0.1.3"
+}

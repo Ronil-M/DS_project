@@ -1,0 +1,48 @@
+# Experiment configuration for Modules B and E (Module C settings live in configs/module_c.yaml).
+# Every script logs the fully resolved version of this file next to its outputs.
+seeds: [0, 1, 2]
+paths:
+  module_c_config: configs/module_c.yaml
+  atlas: outputs/module_c/atlas.npz
+  out: outputs
+shapes:
+  classes: [circle, square, triangle, line]
+  n_train_per_class: 150          # plan: 5000; reduce for CPU
+  n_val_per_class: 25
+  n_test_per_class: 100
+  seed_train: 1001                # splits must use different seeds (plan A1)
+  seed_val: 1002
+  seed_test: 1003
+sweep:
+  k: [3, 5, 8, 12, 16, 24, 32, 48, 64]
+  p_drop: [0.0, 0.05, 0.10, 0.20, 0.30]
+  sigma_thr: [0.0, 0.10, 0.25, 0.50]
+  levels: [null, 16, 128]
+heuristic:
+  method: thin                    # thin (homogeneous thinning, nested sets) | greedy (paper exclusion radius)
+  pool: 96
+  pool_excl_deg: 0.25
+  excl_deg: 0.65                  # greedy only
+  floor_frac: 0.10                # paper: stop below 10 % of maximum overlap
+  target_brightness: 0.7
+scoreboard:
+  dot_sigma_px: 1.5
+learned:
+  epochs: 30
+  batch: 2
+  lr: 1.0e-4                      # 1e-3 and 3e-3 diverged in the smoke run (loss rose to ~2.65)
+  lr_final: 2.0e-5
+  lam_c: 1.0
+  lam_t: 0.05                     # small; warmed up late (task_warmup_epochs)
+  task_warmup_epochs: 10
+  lam_s: 0.0
+  tau: 1.0
+  robust_noise: {p_drop: 0.1, sigma_thr: 0.25}
+evaluators:
+  epochs: 15
+  n_train_per_class: 1500
+  n_val_per_class: 200
+  seed_main: 11
+  seed_alt: 12
+  seed_task: 13                   # T_c: different seed AND architecture from E
+  frac_dynaphos: 0.3

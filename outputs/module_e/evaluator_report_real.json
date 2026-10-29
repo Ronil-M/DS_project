@@ -1,0 +1,53 @@
+{
+  "E_main": {
+    "heldout_dot_accuracy": 0.44166666666666665,
+    "seed": 11,
+    "arch": "ResNetSmall",
+    "n_train_images": 1920,
+    "n_val_images": 480,
+    "classes": [
+      "circle",
+      "hexagon",
+      "kite",
+      "oval",
+      "semicircle",
+      "square",
+      "star",
+      "triangle"
+    ]
+  },
+  "E_alt": {
+    "heldout_dot_accuracy": 0.23333333333333334,
+    "seed": 12,
+    "arch": "PatchMixer",
+    "n_train_images": 1920,
+    "n_val_images": 480,
+    "classes": [
+      "circle",
+      "hexagon",
+      "kite",
+      "oval",
+      "semicircle",
+      "square",
+      "star",
+      "triangle"
+    ]
+  },
+  "T_c": {
+    "heldout_dot_accuracy": 0.18958333333333333,
+    "seed": 13,
+    "arch": "PlainCNN",
+    "n_train_images": 1920,
+    "n_val_images": 480,
+    "classes": [
+      "circle",
+      "hexagon",
+      "kite",
+      "oval",
+      "semicircle",
+      "square",
+      "star",
+      "triangle"
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+{
+ "dynaphos_version": "0.1.3",
+ "torch_version": "2.14.1+cpu",
+ "device": "cpu",
+ "resolution": 256,
+ "view_angle_deg": 10.0,
+ "n_elec_requested": 500,
+ "n_elec_used": 500,
+ "layout_seed": 0,
+ "I_max_uA": 200.0,
+ "I_max_source": "own choice (verify against Dynaphos docs / stimulation-safety literature)",
+ "current_levels": "continuous",
+ "threshold_uA": {
+  "min": 23.92490005493164,
+  "median": 86.18524932861328,
+  "max": 231.2087860107422
+ },
+ "i70_uA": 126.84278730361594,
+ "grid_electrodes_in_central_10deg": 1315,
+ "usable_electrodes": 498,
+ "frames": 1,
+ "tests": {
+  "zero current -> black image": true,
+  "below threshold: nothing, above: phosphene": true,
+  "brightness*size grows monotonically with current": true,
+  "phosphenes grow with eccentricity (0.51 px inner vs 1.78 px outer)": true,
+  "gradients finite": true,
+  "gradient non-zero for active electrodes": true,
+  "gradient exactly zero for sub-threshold electrodes": true,
+  "rendering deterministic": true,
+  "sparse render equals Dynaphos' own dense render (max diff 0.0e+00)": true
+ }
+}

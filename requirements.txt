@@ -1,0 +1,8 @@
+dynaphos==0.1.3
+torch>=2.2
+numpy
+scipy
+matplotlib
+pyyaml
+opencv-python-headless   # imported by dynaphos.image_processing
+pytest
