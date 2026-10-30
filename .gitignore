@@ -10,4 +10,3 @@ venv/
 
 # Test and training artifacts
 .pytest_cache/
-ds project/quickdraw100.npz
